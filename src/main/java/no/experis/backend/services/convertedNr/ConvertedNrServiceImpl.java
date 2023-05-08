@@ -60,12 +60,12 @@ public class ConvertedNrServiceImpl implements ConvertedNrService{
 
     @Override
     public void update(ConvertedNr entity) {
-
+        convertedNrRepository.save(entity);
     }
 
     @Override
-    public void deleteById(String s) {
-
+    public void deleteById(String id) {
+        convertedNrRepository.deleteById(id);
     }
     @Override
     public int convert(String s){

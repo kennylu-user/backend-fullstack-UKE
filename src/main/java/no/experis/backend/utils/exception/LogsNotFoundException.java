@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class LogsNotFoundException extends RuntimeException{
     public LogsNotFoundException(int id){
 
-            super(String.format("Roman %d not found",id));
+            super(String.format("Logs %d not found",id));
     }
 }
