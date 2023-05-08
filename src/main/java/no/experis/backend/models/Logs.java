@@ -12,6 +12,7 @@ public class Logs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String timeStamp;
 //    private String romanNr;
     @ManyToOne
