@@ -63,7 +63,7 @@ class BackendApplicationTests {
 
 	}
 	@Test
-	public void getConvertedNrById() throws Exception{
+	public void getConvertedNrById_X() throws Exception{
 		String uri = "http://localhost:8080/api/v1/convertednr/X";
 		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
 				.accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
@@ -72,10 +72,45 @@ class BackendApplicationTests {
 
 		JSONObject jsonObject = new JSONObject(str);
 		String actual = jsonObject.get("id").toString();
-
-
 		assertEquals("X", actual);
+		int actual2 = (int) jsonObject.get("converted");
+		assertEquals(10,actual2);
 
 	}
+	@Test
+	public void getConvertedNrById_IV() throws Exception{
+		String uri = "http://localhost:8080/api/v1/convertednr/IV";
+		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+				.accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+		String str = mvcResult.getResponse().getContentAsString();
+
+		JSONObject jsonObject = new JSONObject(str);
+		String actual = jsonObject.get("id").toString();
+		assertEquals("IV", actual);
+		int actual2 = (int) jsonObject.get("converted");
+		assertEquals(4,actual2);
+
+	}
+	@Test
+	public void getConvertedNrById_CCCXLVI() throws Exception{
+		String uri = "http://localhost:8080/api/v1/convertednr/CCCXLVI";
+		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+				.accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+		String str = mvcResult.getResponse().getContentAsString();
+
+		JSONObject jsonObject = new JSONObject(str);
+		String actual = jsonObject.get("id").toString();
+
+		assertEquals("CCCXLVI", actual);
+		int actual2 = (int) jsonObject.get("converted");
+		assertEquals(346,actual2);
+
+	}
+
+
+
+
 
 }
