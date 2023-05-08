@@ -13,8 +13,5 @@ public class RomanConvert {
     @Id
     @Column(unique = true, nullable = false, updatable = false)
     private int id;
-    @OneToMany(mappedBy = "")
-    private Set<ConvertedNr> convertedNrs;
-
 
 }

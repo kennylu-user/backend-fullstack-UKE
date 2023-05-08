@@ -2,9 +2,10 @@ package no.experis.backend.services.logs;
 
 import no.experis.backend.models.Logs;
 import no.experis.backend.repositories.LogsRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-
+@Service
 public class LogsServiceImpl implements LogsService{
     private final LogsRepository logsRepository;
 
