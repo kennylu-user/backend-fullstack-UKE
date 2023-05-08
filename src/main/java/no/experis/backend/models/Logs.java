@@ -7,14 +7,14 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "romanConvert")
+@Table(name = "logs")
 public class Logs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String timeStamp;
-    private String romanNr;
+//    private String romanNr;
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "convertedNr_id", nullable = false)
     private ConvertedNr convertedNr;
 }

@@ -1,58 +1,51 @@
 package no.experis.backend.services.convertedNr;
-import jakarta.persistence.Convert;
 import no.experis.backend.models.ConvertedNr;
 import no.experis.backend.models.Logs;
 import no.experis.backend.repositories.ConvertedNrRepository;
+import no.experis.backend.repositories.LogsRepository;
 import no.experis.backend.utils.exception.ConvertedNrNotFoundException;
-import no.experis.backend.utils.exception.RomanConvertNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 @Service
 public class ConvertedNrServiceImpl implements ConvertedNrService{
     private final ConvertedNrRepository convertedNrRepository;
+    private final LogsRepository logsRepository;
 
-    public ConvertedNrServiceImpl(ConvertedNrRepository convertedNrRepository) {
+    public ConvertedNrServiceImpl(ConvertedNrRepository convertedNrRepository, LogsRepository logsRepository) {
         this.convertedNrRepository = convertedNrRepository;
+        this.logsRepository = logsRepository;
     }
 
     @Override
     public ConvertedNr findById(String id) {
         ConvertedNr cn;
         try{
-
             cn = convertedNrRepository.findById(id).orElseThrow(() -> new ConvertedNrNotFoundException(id));
-//            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-//            Logs log = new Logs();
-//            log.setRomanNr(id);
-//            log.setConvertedNr(cn);
-//            log.setTimeStamp(timeStamp);
-//            cn.getLogs().add(log);
-//            convertedNrRepository.save(cn);
+            System.out.println(cn.getLogs());
 
         }
         catch(Exception e){
             cn = new ConvertedNr();
             cn.setId(id);
             int converted = this.convert(id);
+            System.out.println(converted);
             cn.setConverted(converted);
-
-
+            Set<Logs> logs = new HashSet<>();
+            cn.setLogs(logs);
         }
-
-
         Logs log = new Logs();
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        log.setRomanNr(id);
+        String timeStamp = new SimpleDateFormat("ss.mm.HH.dd.MM.yyyy").format(new java.util.Date());
+        System.out.println("TimeStamp");
+        System.out.println(timeStamp);
         log.setConvertedNr(cn);
         log.setTimeStamp(timeStamp);
         cn.getLogs().add(log);
         convertedNrRepository.save(cn);
-        return convertedNrRepository.findById(id).orElseThrow(() -> new ConvertedNrNotFoundException(id));
+        logsRepository.save(log);
+        return cn;
     }
 
     @Override
@@ -90,8 +83,10 @@ public class ConvertedNrServiceImpl implements ConvertedNrService{
             //Process char
             numbers.add(map.get(String.format("%s",c)));
         }
-
         int total = 0;
+        if(numbers.size() == 1){
+            total = numbers.get(0);
+        }
         for (int i = 0; i < numbers.size()-1 ; i++) {
             if(numbers.get(i) >= numbers.get(i+1)){
                 total += numbers.get(i);

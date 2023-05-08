@@ -9,6 +9,6 @@ import java.util.Set;
 public class ConvertedNrDTO {
 
     private String id;
-    private Set<Logs> logs;
+    private Set<String> logs;
     private int converted;
 }
