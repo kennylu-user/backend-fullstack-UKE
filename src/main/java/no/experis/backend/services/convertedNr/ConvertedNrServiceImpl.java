@@ -106,4 +106,9 @@ public class ConvertedNrServiceImpl implements ConvertedNrService{
         return total;
 
     }
+
+    @Override
+    public Set<Logs> getLogsById(String id) {
+        return convertedNrRepository.findById(id).orElseThrow(() -> new ConvertedNrNotFoundException(id)).getLogs();
+    }
 }
