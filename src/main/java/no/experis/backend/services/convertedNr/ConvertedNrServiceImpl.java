@@ -7,6 +7,8 @@ import no.experis.backend.utils.exception.ConvertedNrNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -37,11 +39,11 @@ public class ConvertedNrServiceImpl implements ConvertedNrService{
             cn.setLogs(logs);
         }
         Logs log = new Logs();
-        String timeStamp = new SimpleDateFormat("ss.mm.HH.dd.MM.yyyy").format(new java.util.Date());
-        System.out.println("TimeStamp");
-        System.out.println(timeStamp);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String strDate = formatter.format(date);
         log.setConvertedNr(cn);
-        log.setTimeStamp(timeStamp);
+        log.setTimeStamp(strDate);
         cn.getLogs().add(log);
         convertedNrRepository.save(cn);
         logsRepository.save(log);
